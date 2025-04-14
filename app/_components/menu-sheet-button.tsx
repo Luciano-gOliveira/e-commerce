@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   HomeIcon,
@@ -7,33 +7,37 @@ import {
   MenuIcon,
   PercentIcon,
 } from "lucide-react";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "./ui/sheet";
 import { Button } from "./ui/button";
+import { signIn } from "next-auth/react"
 
 const navigationMenuItems = [
   {
     id: 1,
-    title: "Fazer Login",
-    icon: <LogInIcon />,
-  },
-  {
-    id: 2,
     title: "Início",
     icon: <HomeIcon />,
   },
   {
-    id: 3,
+    id: 2,
     title: "Ofertas",
     icon: <PercentIcon />,
   },
   {
-    id: 4,
+    id: 3,
     title: "Catálogo",
     icon: <ListIcon />,
   },
 ];
 
 const MenuSheetButton = () => {
+  const handleLoginWithGoogleClick = () => signIn("google")
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -43,8 +47,14 @@ const MenuSheetButton = () => {
       </SheetTrigger>
       <SheetContent side="left" className="flex flex-col space-y-4">
         <SheetHeader className="text-left text-lg font-semibold">
-            <SheetTitle>Menu</SheetTitle>
+          <SheetTitle>Menu</SheetTitle>
         </SheetHeader>
+        <Button
+          className="text-md flex items-center justify-start font-semibold"
+          variant="secondary" onClick={handleLoginWithGoogleClick}
+        >
+          <LogInIcon /> Fazer Login
+        </Button>
         {navigationMenuItems.map((menuItem) => {
           return (
             <Button
