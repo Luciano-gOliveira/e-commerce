@@ -30,7 +30,7 @@ const ProductItem = ({ product }: ProductItemProps) => {
         }
       </div>
       {/* TEXTO */}
-      <div className="flex flex-col gap1">
+      <div className="flex flex-col gap-1">
         <p className="truncate text-sm">{product.name}</p>
         <div className="flex items-center gap-2">
           {
