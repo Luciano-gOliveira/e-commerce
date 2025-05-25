@@ -9,6 +9,9 @@ const config: Config = {
   ],
   theme: {
   	extend: {
+		backgroundImage: {
+        'custom-purple': 'linear-gradient(135deg, rgba(80,51,195,1) 0%, rgba(80,51,195,0.2) 100%)',
+      },
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
