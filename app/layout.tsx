@@ -34,7 +34,7 @@ export default function RootLayout({
         <SessionProvider>
           <div className="flex h-full flex-col">
             <Header/>
-            <div className="flex flex-col h-full">
+            <div className="flex-1">
               {children}
             </div>
             <Footer/>
