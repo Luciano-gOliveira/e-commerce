@@ -4,7 +4,13 @@ import CategoriesBadge from "@/app/catalog/_components/catalog-badge";
 import { categoryIcon } from "@/app/constants/category-icons";
 import { computeProductTotalPrice } from "@/app/helpers/product";
 
-const CategoryProduct = async ({params}: any) => {
+interface CategoryProductProps {
+    params: {
+        slug: string
+    }
+}
+
+const CategoryProduct = async ({params}: CategoryProductProps ) => {
     const category = await prismaClient.category.findFirst({
         where: {
             slug: params.slug
