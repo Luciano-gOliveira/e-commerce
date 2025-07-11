@@ -2,7 +2,7 @@
 
 import { ShoppingBagIcon, ShoppingCartIcon } from "lucide-react";
 import { Button } from "./ui/button";
-import { Sheet, SheetContent, SheetFooter, SheetTrigger } from "./ui/sheet";
+import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import TitleBadge from "./title-badge";
 import { CartContext } from "../providers/cart";
 import { useContext } from "react";

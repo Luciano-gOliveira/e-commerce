@@ -69,7 +69,6 @@ const CartProvider = ({children}: {children : ReactNode}) => {
     const addQuantity = (product: CartProduct) => {
         const newProduct = products.map(p => {
             if(p.id === product.id){
-                const newQuantity = p.quantity + product.quantity
                 return {
                     ...p,
                     quantity: p.quantity + 1,
