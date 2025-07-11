@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "./_components/header";
 import SessionProvider from "./providers/session";
 import Footer from "./_components/footer";
+import CartProvider from "./providers/cart";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -32,13 +33,15 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <SessionProvider>
-          <div className="flex h-full flex-col">
-            <Header/>
-            <div className="flex-1">
-              {children}
+          <CartProvider>
+            <div className="flex h-full flex-col">
+              <Header/>
+              <div className="flex-1">
+                {children}
+              </div>
+              <Footer/>
             </div>
-            <Footer/>
-          </div>
+          </CartProvider>
         </SessionProvider>
       </body>
     </html>
