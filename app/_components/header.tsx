@@ -1,7 +1,7 @@
-import { ShoppingCartIcon } from "lucide-react";
 import { Card } from "./ui/card";
 import MenuSheetButton from "./menu-sheet-button";
 import Link from "next/link";
+import Cart from "./cart";
 
 const Header = () => {
   return (
@@ -12,7 +12,7 @@ const Header = () => {
           <span className="text-primary">Valente</span> Store
         </h1>
       </Link>
-      <ShoppingCartIcon />
+      <Cart/>
     </Card>
   );
 };
