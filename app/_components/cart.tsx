@@ -9,9 +9,17 @@ import { useContext } from "react";
 import CartItem from "./cart-item";
 import { computeProductTotalPrice } from "../helpers/product";
 import { Separator } from "./ui/separator";
+import { createCheckout } from "../_actions/checkout";
+import { loadStripe } from "@stripe/stripe-js";
 
 const Cart = () => {
   const { products, total, totalDiscount, subTotal } = useContext(CartContext);
+
+  const handleFinishPurchaseClick = async () =>{
+    const checkout = await createCheckout(products)
+    const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY as string)
+    stripe?.redirectToCheckout({sessionId: checkout.id})
+  }
 
   return (
     <Sheet >
@@ -65,7 +73,7 @@ const Cart = () => {
                 <p className="font-bold">R${total.toFixed(2)}</p>
               </div>
 
-              <Button className="w-full font-semibold">Finalizar compra</Button>
+              <Button className="w-full font-semibold" onClick={handleFinishPurchaseClick}>Finalizar compra</Button>
             </div>
           </>
         ) : (
