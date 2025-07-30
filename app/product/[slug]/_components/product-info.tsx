@@ -41,7 +41,7 @@ const ProductInfo = ({
         {product.discountPercentage ? (
           <div className="flex flex-col">
             <div className="flex items-center gap-2">
-              <p className="text-xl font-bold">R${product.totalPrice.toFixed(2)}</p>
+              <p className="text-xl font-bold">R${product.unitPriceWithDiscount.toFixed(2)}</p>
               <Badge>{product.discountPercentage}%</Badge>
             </div>
 

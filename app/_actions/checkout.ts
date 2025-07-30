@@ -24,7 +24,7 @@ export const createCheckout = async(product: CartProduct[]) => {
                         images: p.imageUrls,
 
                     },
-                    unit_amount: p.totalPrice * 100,    
+                    unit_amount: p.unitPriceWithDiscount * 100,    
                 },
                 quantity: p.quantity
             }

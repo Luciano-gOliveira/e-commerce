@@ -48,7 +48,7 @@ const CartProvider = ({children}: {children : ReactNode}) => {
                     return {
                         ...p,
                         quantity: newQuantity,
-                        totalPrice: newQuantity * product.totalPrice
+                        totalPrice: newQuantity * product.unitPriceWithDiscount
                     }
                     
                 }
@@ -61,7 +61,7 @@ const CartProvider = ({children}: {children : ReactNode}) => {
 
         setProducts(prev => [...prev, {
             ...product,
-            totalPrice: product.quantity * product.totalPrice
+            totalPrice: product.quantity * product.unitPriceWithDiscount
         }])
     }
 
@@ -72,7 +72,7 @@ const CartProvider = ({children}: {children : ReactNode}) => {
                 return {
                     ...p,
                     quantity: p.quantity + 1,
-                    totalPrice: p.totalPrice + product.totalPrice
+                    totalPrice: p.unitPriceWithDiscount + product.unitPriceWithDiscount
                 }
             } return p
 
@@ -88,7 +88,7 @@ const CartProvider = ({children}: {children : ReactNode}) => {
                 return {
                     ...p,
                     quantity: p.quantity -1,
-                    totalPrice: p.totalPrice - product.totalPrice
+                    totalPrice: p.unitPriceWithDiscount - product.unitPriceWithDiscount
 
                 }
             } return p
@@ -111,14 +111,14 @@ const CartProvider = ({children}: {children : ReactNode}) => {
 
     const total = useMemo(() => {
         return products.reduce((total, product) => {
-            return total + product.totalPrice
+            return total + product.unitPriceWithDiscount
         }, 0)
     }, [products])
 
     const totalDiscount = useMemo(() => {
         return products.reduce((total, product) => {
             const totalBase = Number(product.basePrice) * product.quantity
-            return total + (totalBase - product.totalPrice) 
+            return total + (totalBase - product.unitPriceWithDiscount) 
         }, 0)
     }, [products])
 
