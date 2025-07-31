@@ -12,8 +12,8 @@ export const createCheckout = async(product: CartProduct[]) => {
     const checkout = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
         mode: "payment",
-        success_url: "https://e-commerce-eight-psi-98.vercel.app/",
-        cancel_url: "https://e-commerce-eight-psi-98.vercel.app/",
+        success_url: process.env.HOST_URL as string,
+        cancel_url: process.env.HOST_URL as string,
         line_items: product.map(p => {
             return {
                 price_data: {
