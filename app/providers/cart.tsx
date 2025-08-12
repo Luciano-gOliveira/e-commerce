@@ -1,7 +1,8 @@
 "use client"
 
-import { createContext, ReactNode, useMemo, useState } from "react";
+import { createContext, ReactNode, useEffect, useMemo, useState } from "react";
 import { ProductWithTotalPrice } from "../helpers/product";
+import { stringify } from "node:querystring";
 
 export interface CartProduct extends ProductWithTotalPrice{
     quantity: number
@@ -35,7 +36,27 @@ export const CartContext = createContext<ICartContext>({
 
 const CartProvider = ({children}: {children : ReactNode}) => {
     //estado para o carrinho armazenar os produtos
-    const [products, setProducts] = useState<CartProduct[]>([])
+   const [products, setProducts] = useState<CartProduct[]>(
+    () => {
+  if (typeof window !== "undefined") { // Garante que está no cliente
+    const storedCart = localStorage.getItem("cart");
+    if (storedCart && storedCart !== "undefined") {
+      try {
+        return JSON.parse(storedCart);
+      } catch {
+        return [];
+      }
+    }
+  }
+  return [];
+}
+)
+
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(products));
+  }, [products]);
+
 
     //função que adiciona produtos ao carrinhos
     const addToCart = (product: CartProduct) => {
