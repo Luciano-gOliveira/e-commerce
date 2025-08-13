@@ -33,7 +33,7 @@ const navigationMenuItems = [
     id: 2,
     title: "Ofertas",
     icon: <PercentIcon />,
-    href: "/ofertas",
+    href: "/deals",
   },
   {
     id: 3,
