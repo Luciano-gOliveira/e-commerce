@@ -11,11 +11,21 @@ import { computeProductTotalPrice } from "../helpers/product";
 import { Separator } from "./ui/separator";
 import { createCheckout } from "../_actions/checkout";
 import { loadStripe } from "@stripe/stripe-js";
+import { createOrder } from "../_actions/order/order";
+import { useSession } from "next-auth/react";
 
 const Cart = () => {
+  const {data} = useSession()
   const { products, total, totalDiscount, subTotal } = useContext(CartContext);
 
   const handleFinishPurchaseClick = async () =>{
+    if(!data?.user){
+      //TODO: redirecionar para login
+      return
+    }
+    //criar pedido
+    await createOrder(products, (data?.user as any).id )
+
     const checkout = await createCheckout(products)
     const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY as string)
     stripe?.redirectToCheckout({sessionId: checkout.id})
@@ -73,7 +83,9 @@ const Cart = () => {
                 <p className="font-bold">R${total.toFixed(2)}</p>
               </div>
 
-              <Button className="w-full font-semibold" onClick={handleFinishPurchaseClick}>Finalizar compra</Button>
+              <Button className="w-full font-semibold" onClick={handleFinishPurchaseClick}>
+                Finalizar compra
+              </Button>
             </div>
           </>
         ) : (
