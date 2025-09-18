@@ -31,5 +31,6 @@ export const POST = async (request: Request) => {
     const lineItems = sessionWithLineItems.line_items;
     console.log("Line Items:", lineItems);
   }
+
   return NextResponse.json({ received: true})
 };
