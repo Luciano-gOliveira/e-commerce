@@ -18,18 +18,28 @@ const Cart = () => {
   const {data} = useSession()
   const { products, total, totalDiscount, subTotal } = useContext(CartContext);
 
-  const handleFinishPurchaseClick = async () =>{
-    if(!data?.user){
-      //TODO: redirecionar para login
-      return
+  const handleFinishPurchaseClick = async () => {
+    if (!data?.user) {
+      // TODO: redirecionar para o login
+      return;
     }
-    //criar pedido
-    await createOrder(products, (data?.user as any).id )
 
-    const checkout = await createCheckout(products)
-    const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY as string)
-    stripe?.redirectToCheckout({sessionId: checkout.id})
-  }
+    const order = await createOrder(products, (data?.user as any).id);
+
+    const checkout = await createCheckout(products, order.id);
+
+    const stripePublicKey = process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY;
+    if (!stripePublicKey) {
+      throw new Error("Stripe public key is not defined");
+    }
+    const stripe = await loadStripe(stripePublicKey as string);
+
+    // Criar pedido no banco
+
+    stripe?.redirectToCheckout({
+      sessionId: checkout.id,
+    });
+  };
 
   return (
     <Sheet >

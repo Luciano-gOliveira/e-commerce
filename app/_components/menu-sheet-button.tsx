@@ -6,6 +6,7 @@ import {
   LogInIcon,
   LogOutIcon,
   MenuIcon,
+  PackageSearchIcon,
   PercentIcon,
 } from "lucide-react";
 import {
@@ -31,12 +32,20 @@ const navigationMenuItems = [
   },
   {
     id: 2,
+    title: "Meus Pedidos",
+    icon: <PackageSearchIcon />,
+    href: "/orders",
+  }
+  ,
+    //se houver login
+  {
+    id: 3,
     title: "Ofertas",
     icon: <PercentIcon />,
     href: "/deals",
   },
   {
-    id: 3,
+    id: 4,
     title: "Catálogo",
     icon: <ListIcon />,
     href: "/catalog",

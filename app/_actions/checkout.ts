@@ -1,39 +1,40 @@
-"use server"
+"use server";
 
-import { CartProduct } from "../providers/cart"
-import Stripe from "stripe"
+import { CartProduct } from "@/app/providers/cart";
+import Stripe from "stripe";
 
-export const createCheckout = async(product: CartProduct[]) => {
-    //criar checkout
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
-        apiVersion: "2025-06-30.basil"
-    })
+export const createCheckout = async (
+  products: CartProduct[],
+  orderId: string,
+) => {
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+    apiVersion: "2025-08-27.basil",
+  });
 
-    const checkout = await stripe.checkout.sessions.create({
-        payment_method_types: ["card"],
-        mode: "payment",
-        metadata: {
-            
+  const checkout = await stripe.checkout.sessions.create({
+    payment_method_types: ["card"],
+    mode: "payment",
+    success_url: "http://localhost:3000/orders",
+    cancel_url: "http://localhost:3000/orders",
+    metadata: {
+      orderId,
+    },
+    line_items: products.map((product) => {
+      return {
+        price_data: {
+          currency: "brl",
+          product_data: {
+            name: product.name,
+            description: product.description,
+            images: product.imageUrls,
+          },
+          unit_amount: product.unitPriceWithDiscount * 100,
         },
-        success_url: process.env.HOST_URL as string,
-        cancel_url: process.env.HOST_URL as string,
-        line_items: product.map(p => {
-            return {
-                price_data: {
-                    currency: "brl",
-                    product_data: {
-                        name: p.name,
-                        description: p.description,
-                        images: p.imageUrls,
+        quantity: product.quantity,
+      };
+    }),
+  });
 
-                    },
-                    unit_amount: p.unitPriceWithDiscount * 100,    
-                },
-                quantity: p.quantity
-            }
-        })
-    })
-
-    //retornar checkout
-    return checkout
-}
+  // RETORNAR O CHECKOUT
+  return checkout;
+};
