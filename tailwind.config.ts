@@ -9,9 +9,9 @@ const config: Config = {
   ],
   theme: {
   	extend: {
-		backgroundImage: {
-        'custom-purple': 'linear-gradient(135deg, rgba(80,51,195,1) 0%, rgba(80,51,195,0.2) 100%)',
-      },
+  		backgroundImage: {
+  			'custom-purple': 'linear-gradient(135deg, rgba(80,51,195,1) 0%, rgba(80,51,195,0.2) 100%)'
+  		},
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
@@ -58,6 +58,28 @@ const config: Config = {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
+  		},
+  		keyframes: {
+  			'accordion-down': {
+  				from: {
+  					height: '0'
+  				},
+  				to: {
+  					height: 'var(--radix-accordion-content-height)'
+  				}
+  			},
+  			'accordion-up': {
+  				from: {
+  					height: 'var(--radix-accordion-content-height)'
+  				},
+  				to: {
+  					height: '0'
+  				}
+  			}
+  		},
+  		animation: {
+  			'accordion-down': 'accordion-down 0.2s ease-out',
+  			'accordion-up': 'accordion-up 0.2s ease-out'
   		}
   	}
   },

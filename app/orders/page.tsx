@@ -9,25 +9,44 @@ import OrderItem from "./_components/order-item"
 
 const OrderPage = async() => {
     // const user =  getServerSession(authOptions)
-    const orders = await prismaClient.order.findMany({})
+    const orders = await prismaClient.order.findMany({
+        include: {
+            orderProducts: {
+                include: {
+                    product: true
+                }
+            }
+        }
+    })
     // if(!user){
     //     return <p>Access Denied</p>
     // }
+        const getStatusPayment = (status: "WAITING_FOR_PAYMENT" | "PAYMENT_CONFIRMED") => {
+            if( status === "WAITING_FOR_PAYMENT"){
+                return "Aguardando Pagamento"
+            } else{
+                return "Pago"
+            }
+};
+
     return ( 
-        <div className="p-5">
+        <div className="p-5 space-y-6">
             <TitleBadge>
                 < PackageSearchIcon size={16}/>
                 Meus Pedidos
             </TitleBadge>
-            <div className="grid grid-cols-2 gap-4 mt-5">
-                {
-                    orders.map(order => {
-                        return (
-                            <OrderItem key={order.id} status={order.status} orderId={order.id} />
-                        )
-                    })
-                }
-            </div>
+
+            {
+                orders.map(order => {
+                    return(
+                        <OrderItem 
+                            key={order.id}
+                            orderProducts={order.orderProducts}
+                            status={getStatusPayment(order.status)}
+                        />
+                    )
+                })
+            }
         </div>
      );
 }
